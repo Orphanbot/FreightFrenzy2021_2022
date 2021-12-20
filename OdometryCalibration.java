@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Robot.Drivetrain.Odometry;
+package org.firstinspires.ftc.teamcode.Odometry;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -29,13 +29,13 @@ public class OdometryCalibration extends LinearOpMode {
     BNO055IMU imu;
 
     //Hardware Map Names for drive motors and odometry wheels. THIS WILL CHANGE ON EACH ROBOT, YOU NEED TO UPDATE THESE VALUES ACCORDINGLY
-    String rfName = "rf", rbName = "rb", lfName = "lf", lbName = "lb";
+    String rfName = "front_right_drive", rbName = "rear_right_drive", lfName = "front_left_drive", lbName = "rear_left_drive";
     String verticalLeftEncoderName = rbName, verticalRightEncoderName = lfName, horizontalEncoderName = rfName;
 
-    final double PIVOT_SPEED = 0.5;
+    final double PIVOT_SPEED = 0.25;
 
     //The amount of encoder ticks for each inch the robot moves. THIS WILL CHANGE FOR EACH ROBOT AND NEEDS TO BE UPDATED HERE
-    final double COUNTS_PER_INCH = 307.699557;
+    final double COUNTS_PER_INCH = 8192/4.3296;
 
     ElapsedTime timer = new ElapsedTime();
 
@@ -106,7 +106,7 @@ public class OdometryCalibration extends LinearOpMode {
         double encoderDifference = Math.abs(verticalLeft.getCurrentPosition()) + (Math.abs(verticalRight.getCurrentPosition()));
 
         double verticalEncoderTickOffsetPerDegree = encoderDifference/angle;
-
+        // this is where the tweaks for angles should go
         double wheelBaseSeparation = (2*90*verticalEncoderTickOffsetPerDegree)/(Math.PI*COUNTS_PER_INCH);
 
         horizontalTickOffset = horizontal.getCurrentPosition()/Math.toRadians(getZAngle());
@@ -168,8 +168,9 @@ public class OdometryCalibration extends LinearOpMode {
         left_back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         left_front.setDirection(DcMotorSimple.Direction.REVERSE);
-        right_front.setDirection(DcMotorSimple.Direction.REVERSE);
-        right_back.setDirection(DcMotorSimple.Direction.REVERSE);
+        right_front.setDirection(DcMotorSimple.Direction.FORWARD);
+        right_back.setDirection(DcMotorSimple.Direction.FORWARD);
+        left_back.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         telemetry.addData("Status", "Hardware Map Init Complete");

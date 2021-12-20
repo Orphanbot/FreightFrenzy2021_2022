@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -109,24 +110,24 @@ public class HardwareRovRuk_1
         Barm.setDirection (DcMotor.Direction.FORWARD);
         Sarm.setDirection (DcMotor.Direction.FORWARD);
         Parm.setDirection (DcMotor.Direction.FORWARD);
-        FrontLeftDrive.setDirection (DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        FrontRightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        RearLeftDrive.setDirection  (DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        RearRightDrive.setDirection (DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motor
+        FrontLeftDrive.setDirection (DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        FrontRightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        RearLeftDrive.setDirection  (DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        RearRightDrive.setDirection (DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motor
 
         // Set all motors to zero power and the servos to their init position
-        Barm .setPower(0);
-        Sarm .setPower(0);
-        Parm .setPower(0);
-        FrontLeftDrive .setPower(0);
+        Barm.setPower(0);
+        Sarm.setPower(0);
+        Parm.setPower(0);
+        FrontLeftDrive.setPower(0);
         FrontRightDrive.setPower(0);
-        RearLeftDrive  .setPower(0);
-        RearRightDrive .setPower(0);
+        RearLeftDrive.setPower(0);
+        RearRightDrive.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         Barm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Sarm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Sarm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Parm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

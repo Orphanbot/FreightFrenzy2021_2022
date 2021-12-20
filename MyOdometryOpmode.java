@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Odometry;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.Robot.Drivetrain.Odometry.OdometryGlobalCoordinatePosition;
+//import org.firstinspires.ftc.teamcode.Robot.Drivetrain.Odometry.OdometryGlobalCoordinatePosition;
 
 /**
  * Created by Sarthak on 10/4/2019.
@@ -59,6 +59,32 @@ public class MyOdometryOpmode extends LinearOpMode {
         //Stop the thread
         globalPositionUpdate.stop();
 
+    }
+
+    public void goToPosition(double targetXPosition, double targetYPosition, double robotPower, double desirredRobotOrientation, double allowableDistanceError){
+        double distanceToXTarget = targetXPosition - globalPositionUpdate.returnXCoordinate();
+        double distanceToYTarget = targetYPosition - globalPositionUpdate.returnYCoordinate();
+
+        double distance = Math.hypot(distanceToXTarget,distanceToYTarget);
+
+        while(opModeIsActive() && distance > allowableDistanceError){
+            distance = Math.hypot(distanceToXTarget,distanceToYTarget);
+            distanceToXTarget = targetXPosition - globalPositionUpdate.returnXCoordinate();
+            distanceToYTarget = targetYPosition - globalPositionUpdate.returnYCoordinate();
+
+            double robotMovementAngle = Math.toDegrees(Math.atan2(distanceToXTarget,distanceToYTarget));
+
+            double robotMovementXComponent = calculateX(robotMovementAngle, robotPower);
+            double robotMovementYComponent = calculateY(robotMovementAngle, robotPower);
+            double pivotCorrection = desirredRobotOrientation - globalPositionUpdate.returnOrientation();
+
+            // Send calculated power to wheels
+            left_front.setPower(robotMovementYComponent + robotMovementXComponent + pivotCorrection);
+            right_front.setPower(robotMovementYComponent - robotMovementXComponent - pivotCorrection);
+            left_back.setPower(robotMovementYComponent + robotMovementXComponent - pivotCorrection);
+            right_back.setPower(robotMovementYComponent - robotMovementXComponent + pivotCorrection);
+
+        }
     }
 
     private void initDriveHardwareMap(String rfName, String rbName, String lfName, String lbName, String vlEncoderName, String vrEncoderName, String hEncoderName){

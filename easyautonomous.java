@@ -23,12 +23,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -47,7 +44,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
  * the sample regions over the first 3 stones.
  */
 @Autonomous
-public class SkystoneDeterminationExample extends LinearOpMode {
+public class easyautonomous extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
 
@@ -141,7 +138,13 @@ public class SkystoneDeterminationExample extends LinearOpMode {
 
         waitForStart();
 
-        robot.Carm.setPosition(0.75);
+        //robot.Carm.setPosition(0.75);
+
+        //encoderDrive(DRIVE_SPEED, -3, -3, -3, -3, 5);
+        //encoderDrive(DRIVE_SPEED, -12, -12, 12, 12, 5);
+        //encoderDrive(DRIVE_SPEED, 6, -6, -6, 6, 5);
+        encoderDrive(DRIVE_SPEED, 24, 24, 24, 24, 5);
+        /*
         do {
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.update();
@@ -240,7 +243,7 @@ public class SkystoneDeterminationExample extends LinearOpMode {
 
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
-        } while (false);
+        } while (false);*/
     }
 
 
